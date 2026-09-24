@@ -1,0 +1,169 @@
+// =============================================================================
+//  Padronizador de Estações - TI  |  Arquivo de configuração (EXEMPLO)
+// -----------------------------------------------------------------------------
+//  - Este arquivo aceita comentários (// ...) e vírgula no final das listas.
+//  - Em caminhos do Windows, cada barra invertida deve ser escrita dobrada: "C:\\Pasta\\arquivo.msi"
+//    Um caminho de rede \\SERVIDOR\Pasta fica assim: "\\\\SERVIDOR\\Pasta"
+//  - Itens com "pendente": true aparecem no resumo, mas NUNCA são executados.
+//  - Itens com configuração incompleta são tratados automaticamente como pendentes.
+//  - Os nomes de servidor, pastas e programas abaixo são FICTÍCIOS. Substitua pelos reais
+//    na cópia "padronizacao.json" (que não deve ser enviada ao GitHub).
+//  - Não coloque senhas, chaves de licença ou tokens neste arquivo.
+// =============================================================================
+{
+  // Pasta local onde fica um log por execução.
+  "pastaLogs": "%ProgramData%\\PadronizadorTI\\Logs",
+
+  // (Opcional) Pasta de rede para receber uma cópia de cada log. Deixe "" para não usar.
+  // Exemplo: "\\\\SERVIDOR-EXEMPLO\\TI$\\PadronizadorTI\\Logs"
+  "pastaLogsRede": "",
+
+  // Fontes do WinGet aceitas. "winget" é o repositório oficial da Microsoft.
+  // Não adicione fontes de terceiros desconhecidas.
+  "fontesWinGetPermitidas": [ "winget" ],
+
+  // ---------------------------------------------------------------------------
+  //  Configurações comuns de energia (aplicadas a todos os departamentos)
+  //  Minutos: 0 = Nunca | null = não alterar
+  // ---------------------------------------------------------------------------
+  "energia": {
+    "aplicar": true,
+    "ativarAltoDesempenho": true,
+
+    // Ligado à tomada (AC)
+    "tomada": {
+      "desligarTelaMinutos": 0,
+      "suspenderMinutos": 0,
+      "hibernarMinutos": 0
+    },
+
+    // Na bateria (DC) - separado e NÃO aplicado automaticamente.
+    // Só será aplicado se você mudar "aplicar" para true, conscientemente.
+    "bateria": {
+      "aplicar": false,
+      "desligarTelaMinutos": 5,
+      "suspenderMinutos": 15,
+      "hibernarMinutos": 60
+    }
+  },
+
+  // ---------------------------------------------------------------------------
+  //  Aplicativos instalados em TODOS os departamentos
+  // ---------------------------------------------------------------------------
+  "aplicativosComuns": [
+    {
+      "nome": "WinRAR",
+      "tipo": "WinGet",
+      "idWinGet": "RARLab.WinRAR",
+      "fonte": "winget",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "WinRAR", "comparacao": "IniciaCom" },
+      "observacao": "Uso comercial exige licença do WinRAR. A chave de licença NÃO é aplicada por este programa."
+    },
+    {
+      "nome": "Antivírus corporativo",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: informar produto, versão, instalador (.msi/.exe) aprovado, argumentos silenciosos e regra de detecção. O Microsoft Defender não é desativado por este programa.",
+      "tipo": "Msi",
+      "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Antivirus\\PREENCHER.msi",
+      "argumentos": "",
+      "sha256": "",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER nome em Programas e Recursos" }
+    },
+    {
+      "nome": "Java",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: informar distribuição (Oracle Java exige licença comercial; OpenJDK é alternativa), versão (ex.: 8, 17, 21), arquitetura (32/64 bits) e o instalador ou ID WinGet aprovado.",
+      "tipo": "WinGet",
+      "idWinGet": "",
+      "versao": "",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+    }
+
+    // ---- Modelos para copiar (remova o comentário e preencha) ----
+    // {
+    //   "nome": "EXEMPLO - Programa pelo WinGet",
+    //   "tipo": "WinGet",
+    //   "idWinGet": "Fornecedor.Programa",           // confira com: winget search "nome" --source winget
+    //   "versao": "",                                // vazio = mais recente
+    //   "escopo": "machine"                          // opcional: machine | user
+    // },
+    // {
+    //   "nome": "EXEMPLO - Instalador interno .msi",
+    //   "tipo": "Msi",
+    //   "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Programa\\programa.msi",
+    //   "argumentos": "ALLUSERS=1",                  // /qn /norestart já são adicionados
+    //   "sha256": "",                                // opcional: Get-FileHash arquivo.msi
+    //   "deteccao": { "tipo": "CodigoProdutoMsi", "codigoProduto": "{00000000-0000-0000-0000-000000000000}" }
+    // },
+    // {
+    //   "nome": "EXEMPLO - Instalador interno .exe",
+    //   "tipo": "Exe",
+    //   "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Programa\\setup.exe",
+    //   "argumentos": "/S",                          // silencioso: consulte o fornecedor (/S, /quiet, /verysilent...)
+    //   "codigosSucesso": [ 0 ],
+    //   "codigosReinicio": [ 3010 ],
+    //   "tempoLimiteMinutos": 30,
+    //   "deteccao": { "tipo": "Arquivo", "caminho": "%ProgramFiles%\\Programa\\programa.exe" }
+    // }
+  ],
+
+  // ---------------------------------------------------------------------------
+  //  Aplicativos específicos de cada departamento
+  //  Os itens "EXEMPLO" estão pendentes: substitua pelos programas reais.
+  // ---------------------------------------------------------------------------
+  "departamentos": [
+    {
+      "nome": "Legal",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Legal 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Legal.",
+          "tipo": "WinGet",
+          "idWinGet": ""
+        }
+      ]
+    },
+    {
+      "nome": "Fiscal",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Fiscal 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Fiscal.",
+          "tipo": "Msi",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\PREENCHER.msi",
+          "deteccao": { "tipo": "CodigoProdutoMsi", "codigoProduto": "" }
+        }
+      ]
+    },
+    {
+      "nome": "Contábil",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Contábil 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Contábil.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Contabil\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "" }
+        }
+      ]
+    },
+    {
+      "nome": "Departamento Pessoal",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Departamento Pessoal 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do Departamento Pessoal.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\DP\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "Arquivo", "caminho": "" }
+        }
+      ]
+    }
+  ]
+}
