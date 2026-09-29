@@ -11,8 +11,7 @@ public static class InstaladorLocal
     {
         var caminho = Environment.ExpandEnvironmentVariables(app.Caminho!);
         if (!File.Exists(caminho))
-            return (false, $"Instalador não encontrado ou sem acesso: {caminho}" +
-                           (caminho.StartsWith(@"\\") ? " (confira a permissão do usuário administrador no compartilhamento)." : "."));
+            return (false, $"Instalador não encontrado ou sem acesso: {caminho}{DicaCaminho(caminho)}");
 
         if (string.IsNullOrWhiteSpace(app.Sha256))
             return (true, $"Instalador encontrado: {caminho} (sem verificação de SHA-256 configurada).");
@@ -82,6 +81,20 @@ public static class InstaladorLocal
             if (pastaTemp is not null)
                 try { Directory.Delete(pastaTemp, recursive: true); } catch { /* arquivo ainda em uso: ignora */ }
         }
+    }
+
+    private static string DicaCaminho(string caminho)
+    {
+        if (caminho.StartsWith(@"\\"))
+            return " (confira o caminho e a permissão no compartilhamento).";
+        try
+        {
+            var unidade = new DriveInfo(Path.GetPathRoot(caminho)!);
+            if (unidade.DriveType is DriveType.Network or DriveType.NoRootDirectory)
+                return $" (a unidade {unidade.Name} parece ser mapeada; unidades mapeadas não aparecem para o administrador. Use o caminho de rede \\\\servidor\\pasta).";
+        }
+        catch { /* caminho inválido */ }
+        return ".";
     }
 
     private static string ArgumentosMsi(string caminho, Aplicativo app, string? pastaLogs)

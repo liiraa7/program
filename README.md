@@ -227,6 +227,17 @@ O log detalhado do MSI fica junto com os logs do programa.
 Argumentos silenciosos comuns (**confirme com o fabricante**): NSIS `/S`, Inno Setup `/VERYSILENT /NORESTART`,
 InstallShield `/s /v"/qn /norestart"`, WiX Burn `/quiet /norestart`. Inclua sempre a opção de **não reiniciar** quando o instalador tiver uma.
 
+#### Pasta de rede protegida por usuário e senha
+
+Se os instaladores estiverem numa pasta que pede login (ex.: `\\srv-dominio\Instaladores`), **não coloque
+usuário nem senha no JSON**. Ao iniciar a simulação ou a execução, o Padronizador detecta a pasta inacessível e
+abre uma janela pedindo usuário e senha. A senha fica só na memória, não vai para o log, e a conexão é desfeita
+ao final. Se o técnico clicar em **"Pular esta pasta"**, os itens dessa pasta ficam como falha "sem acesso".
+
+> **Use sempre o caminho de rede (UNC), nunca a letra da unidade mapeada** (ex.: `I:\...`). Quando o
+> programa roda como administrador, o Windows não enxerga as unidades mapeadas do usuário. Para descobrir o
+> caminho real de uma letra, rode `net use I:` e veja o campo "Nome remoto".
+
 #### Campos de todos os programas
 
 | Campo | Uso |
@@ -310,7 +321,7 @@ Se for VM, crie um *checkpoint/snapshot* antes de começar.
 - **Não** baixa arquivos de URLs. Instaladores vêm de caminhos locais/UNC ou do WinGet, e só das fontes em
   `fontesWinGetPermitidas` (padrão: apenas a fonte oficial `winget`).
 - **Não** ativa licenças, não aplica chaves de produto e não guarda senhas. Não coloque credenciais no JSON.
-  Para acessar a pasta de rede, use a própria conta do técnico/administrador.
+  Para pastas de rede protegidas, o programa pede usuário e senha na hora e não os grava.
 - **Não** reinicia o computador. Só avisa.
 - **Não** executa itens marcados como pendentes nem itens com configuração incompleta.
 - **Não** exige administrador para simular. A execução real verifica a permissão antes de começar.

@@ -235,6 +235,7 @@ public sealed class FormPrincipal : Form
 
         AtualizarPlano(); // recomeça com todas as etapas zeradas
         _txtLog.Clear();
+        var pastasConectadas = ConectarPastasDeRede();
         DefinirEmExecucao(true);
         _cancelamento = new CancellationTokenSource();
 
@@ -273,6 +274,8 @@ public sealed class FormPrincipal : Form
         }
         finally
         {
+            foreach (var raiz in pastasConectadas)
+                CompartilhamentoRede.Desconectar(raiz);
             DefinirEmExecucao(false);
             _cancelamento?.Dispose();
             _cancelamento = null;
@@ -284,6 +287,44 @@ public sealed class FormPrincipal : Form
             : resumo.MotivosReinicio.Count > 0 ? MessageBoxIcon.Exclamation
             : MessageBoxIcon.Information;
         MessageBox.Show(this, resumo.Texto(), "Resumo", MessageBoxButtons.OK, icone);
+    }
+
+    /// <summary>
+    /// Para cada pasta de rede usada pelos instaladores e que não esteja acessível,
+    /// pede usuário e senha ao técnico. Retorna as pastas conectadas, para desconectar no final.
+    /// </summary>
+    private List<string> ConectarPastasDeRede()
+    {
+        var conectadas = new List<string>();
+        var raizes = _etapas
+            .Where(e => e.Aplicativo is { Pendente: false, Tipo: not TipoInstalador.WinGet })
+            .Select(e => CompartilhamentoRede.ObterRaiz(e.Aplicativo!.Caminho!))
+            .OfType<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var raiz in raizes)
+        {
+            if (CompartilhamentoRede.EstaAcessivel(raiz)) continue;
+
+            string? erro = null;
+            while (true)
+            {
+                using var dlg = new DialogoCredencial(raiz, erro);
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                {
+                    EscreverTela($"Pasta de rede {raiz} sem acesso (o técnico optou por pular).");
+                    break;
+                }
+                erro = CompartilhamentoRede.Conectar(raiz, dlg.Usuario, dlg.Senha);
+                if (erro is null)
+                {
+                    EscreverTela($"Conectado à pasta de rede {raiz} como {dlg.Usuario}.");
+                    conectadas.Add(raiz);
+                    break;
+                }
+            }
+        }
+        return conectadas;
     }
 
     private void Cancelar()
