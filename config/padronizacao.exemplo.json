@@ -126,14 +126,60 @@
     },
     {
       "nome": "Fiscal",
+      // Certificado digital: o Fiscal usa certificado A1 (arquivo .pfx). Ele NÃO é instalado
+      // por este programa, pois exige senha. Importe manualmente, por usuário.
       "aplicativos": [
         {
-          "nome": "EXEMPLO - Aplicativo do Fiscal 1",
+          "nome": "Adobe Acrobat Reader (64 bits)",
+          "tipo": "WinGet",
+          "idWinGet": "Adobe.Acrobat.Reader.64-bit",
+          "fonte": "winget",
+          "observacao": "Confirme o ID antes do uso: winget show --id Adobe.Acrobat.Reader.64-bit --source winget"
+        },
+        {
+          "nome": "Domínio Sistemas (Thomson Reuters) - estação cliente",
           "pendente": true,
-          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Fiscal.",
-          "tipo": "Msi",
-          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\PREENCHER.msi",
-          "deteccao": { "tipo": "CodigoProdutoMsi", "codigoProduto": "" }
+          "motivoPendencia": "PENDENTE: informar o caminho do instalador da estação (normalmente fica no servidor do Domínio), os argumentos de instalação silenciosa e o nome exibido em Configurações > Aplicativos.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Dominio\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "Receitanet",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial da Receita Federal (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\Receitanet\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "Receitanet" }
+        },
+        {
+          "nome": "PVA EFD ICMS/IPI (SPED Fiscal)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial do SPED (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\EFD-ICMS-IPI\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "PVA EFD-Contribuições",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial do SPED (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\EFD-Contribuicoes\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "Programa da SEFAZ (estado a definir)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: informar o estado, o nome do programa da SEFAZ, o instalador baixado do site oficial e os argumentos silenciosos.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\SEFAZ\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
         }
       ]
     },
