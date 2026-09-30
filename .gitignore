@@ -1,0 +1,34 @@
+# Build / IDE
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.rsuser
+*.cache
+TestResults/
+
+# Saída da publicação (gerada por scripts/publicar.ps1)
+dist/
+publish/
+*.zip
+
+# Configuração REAL da empresa: caminhos internos, servidores e nomes de instaladores.
+# Mantenha somente o arquivo de exemplo no repositório.
+config/padronizacao.json
+
+# Logs de execução
+logs/
+*.log
+
+# Nunca versionar instaladores, licenças ou credenciais
+*.exe
+*.msi
+*.msix
+*.key
+*.lic
+*.pfx
+*.p12
+rarreg.*
+.env

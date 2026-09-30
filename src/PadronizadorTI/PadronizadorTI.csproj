@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PadronizadorTI</RootNamespace>
+    <AssemblyName>PadronizadorTI</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>1.0.0</Version>
+    <Product>Padronizador de Estações - TI</Product>
+    <Description>Padroniza computadores Windows após a formatação por departamento.</Description>
+    <SatelliteResourceLanguages>pt-BR</SatelliteResourceLanguages>
+    <!-- Permite compilar (não executar) em Linux/macOS, útil para CI. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+
+  <!--
+    Copia a configuração para a pasta de saída como "padronizacao.json".
+    Se existir config/padronizacao.json (arquivo REAL, ignorado pelo Git), ele é usado;
+    caso contrário, é usado o arquivo de exemplo versionado.
+  -->
+  <ItemGroup>
+    <None Include="..\..\config\padronizacao.json"
+          Condition="Exists('..\..\config\padronizacao.json')"
+          Link="padronizacao.json"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+    <None Include="..\..\config\padronizacao.exemplo.json"
+          Condition="!Exists('..\..\config\padronizacao.json')"
+          Link="padronizacao.json"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+</Project>

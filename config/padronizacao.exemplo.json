@@ -1,0 +1,230 @@
+// =============================================================================
+//  Padronizador de Estações - TI  |  Arquivo de configuração (EXEMPLO)
+// -----------------------------------------------------------------------------
+//  - Este arquivo aceita comentários (// ...) e vírgula no final das listas.
+//  - Em caminhos do Windows, cada barra invertida deve ser escrita dobrada: "C:\\Pasta\\arquivo.msi"
+//    Um caminho de rede \\SERVIDOR\Pasta fica assim: "\\\\SERVIDOR\\Pasta"
+//  - Itens com "pendente": true aparecem no resumo, mas NUNCA são executados.
+//  - Itens com configuração incompleta são tratados automaticamente como pendentes.
+//  - Os nomes de servidor, pastas e programas abaixo são FICTÍCIOS. Substitua pelos reais
+//    na cópia "padronizacao.json" (que não deve ser enviada ao GitHub).
+//  - Não coloque senhas, chaves de licença ou tokens neste arquivo.
+// =============================================================================
+{
+  // Pasta local onde fica um log por execução.
+  "pastaLogs": "%ProgramData%\\PadronizadorTI\\Logs",
+
+  // (Opcional) Pasta de rede para receber uma cópia de cada log. Deixe "" para não usar.
+  // Exemplo: "\\\\SERVIDOR-EXEMPLO\\TI$\\PadronizadorTI\\Logs"
+  "pastaLogsRede": "",
+
+  // Fontes do WinGet aceitas. "winget" é o repositório oficial da Microsoft.
+  // Não adicione fontes de terceiros desconhecidas.
+  "fontesWinGetPermitidas": [ "winget" ],
+
+  // ---------------------------------------------------------------------------
+  //  Configurações comuns de energia (aplicadas a todos os departamentos)
+  //  Minutos: 0 = Nunca | null = não alterar
+  // ---------------------------------------------------------------------------
+  "energia": {
+    "aplicar": true,
+    "ativarAltoDesempenho": true,
+
+    // Ligado à tomada (AC)
+    "tomada": {
+      "desligarTelaMinutos": 0,
+      "suspenderMinutos": 0,
+      "hibernarMinutos": 0
+    },
+
+    // Na bateria (DC) - separado e NÃO aplicado automaticamente.
+    // Só será aplicado se você mudar "aplicar" para true, conscientemente.
+    "bateria": {
+      "aplicar": false,
+      "desligarTelaMinutos": 5,
+      "suspenderMinutos": 15,
+      "hibernarMinutos": 60
+    }
+  },
+
+  // ---------------------------------------------------------------------------
+  //  Aplicativos instalados em TODOS os departamentos
+  // ---------------------------------------------------------------------------
+  "aplicativosComuns": [
+    {
+      "nome": "WinRAR",
+      "tipo": "WinGet",
+      "idWinGet": "RARLab.WinRAR",
+      "fonte": "winget",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "WinRAR", "comparacao": "IniciaCom" },
+      "observacao": "Uso comercial exige licença do WinRAR. A chave de licença NÃO é aplicada por este programa."
+    },
+    {
+      "nome": "Antivírus corporativo",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: informar produto, versão, instalador (.msi/.exe) aprovado, argumentos silenciosos e regra de detecção. O Microsoft Defender não é desativado por este programa.",
+      "tipo": "Msi",
+      "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Antivirus\\PREENCHER.msi",
+      "argumentos": "",
+      "sha256": "",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER nome em Programas e Recursos" }
+    },
+    {
+      "nome": "Adobe Acrobat Reader (64 bits)",
+      "tipo": "WinGet",
+      "idWinGet": "Adobe.Acrobat.Reader.64-bit",
+      "fonte": "winget",
+      "observacao": "Confirme o ID antes do uso: winget show --id Adobe.Acrobat.Reader.64-bit --source winget"
+    },
+    {
+      "nome": "Domínio Sistemas (Thomson Reuters) - estação",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: baixar o Instala.exe da versão usada pelo servidor (site oficial download.dominiosistemas.com.br/instalacao/contabil/), conferir com o arquivo da pasta checksums/, colocar em Padronizador-Comum\\Dominio\\ e rodar o comando de identificação.",
+      "tipo": "Exe",
+      "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Comum\\Dominio\\Instala.exe",
+      "argumentos": "",
+      "tempoLimiteMinutos": 90,
+      "observacao": "Instala qualquer versão uma única vez; depois o próprio Domínio se atualiza pelo servidor (pasta de atualização do servidor do Domínio). Para trocar o instalador de base, substitua o Instala.exe mantendo o mesmo nome.",
+      "deteccao": {
+        "tipo": "ProgramaInstalado",
+        "nomeExibicao": "Domínio",
+        "comparacao": "Contem"
+      }
+    },
+    {
+      "nome": "Java",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: informar distribuição (Oracle Java exige licença comercial; OpenJDK é alternativa), versão (ex.: 8, 17, 21), arquitetura (32/64 bits) e o instalador ou ID WinGet aprovado.",
+      "tipo": "WinGet",
+      "idWinGet": "",
+      "versao": "",
+      "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+    }
+
+    // ---- Modelos para copiar (remova o comentário e preencha) ----
+    // {
+    //   "nome": "EXEMPLO - Programa pelo WinGet",
+    //   "tipo": "WinGet",
+    //   "idWinGet": "Fornecedor.Programa",           // confira com: winget search "nome" --source winget
+    //   "versao": "",                                // vazio = mais recente
+    //   "escopo": "machine"                          // opcional: machine | user
+    // },
+    // {
+    //   "nome": "EXEMPLO - Instalador interno .msi",
+    //   "tipo": "Msi",
+    //   "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Programa\\programa.msi",
+    //   "argumentos": "ALLUSERS=1",                  // /qn /norestart já são adicionados
+    //   "sha256": "",                                // opcional: Get-FileHash arquivo.msi
+    //   "deteccao": { "tipo": "CodigoProdutoMsi", "codigoProduto": "{00000000-0000-0000-0000-000000000000}" }
+    // },
+    // {
+    //   "nome": "EXEMPLO - Instalador interno .exe",
+    //   "tipo": "Exe",
+    //   "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Programa\\setup.exe",
+    //   "argumentos": "/S",                          // silencioso: consulte o fornecedor (/S, /quiet, /verysilent...)
+    //   "codigosSucesso": [ 0 ],
+    //   "codigosReinicio": [ 3010 ],
+    //   "tempoLimiteMinutos": 30,
+    //   "deteccao": { "tipo": "Arquivo", "caminho": "%ProgramFiles%\\Programa\\programa.exe" }
+    // }
+  ],
+
+  // ---------------------------------------------------------------------------
+  //  Aplicativos específicos de cada departamento
+  //  Os itens "EXEMPLO" estão pendentes: substitua pelos programas reais.
+  // ---------------------------------------------------------------------------
+  "departamentos": [
+    {
+      "nome": "Legal",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Legal 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Legal.",
+          "tipo": "WinGet",
+          "idWinGet": ""
+        }
+      ]
+    },
+    {
+      "nome": "Fiscal",
+      // Certificado digital: o Fiscal usa certificado A1 (arquivo .pfx). Ele NÃO é instalado
+      // por este programa, pois exige senha. Importe manualmente, por usuário.
+      "aplicativos": [
+        {
+          "nome": "Receitanet",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial da Receita Federal (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\Receitanet\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "Receitanet" }
+        },
+        {
+          "nome": "PVA EFD ICMS/IPI (SPED Fiscal)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial do SPED (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\EFD-ICMS-IPI\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "PVA EFD-Contribuições",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no site oficial do SPED (gov.br), colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\EFD-Contribuicoes\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "Nova GIA (SEFAZ-SP)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no portal oficial da SEFAZ-SP, colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\GIA\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "SEDIF-SN (DeSTDA)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no portal oficial do SEDIF-SN, colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\SEDIF\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        }
+      ]
+    },
+    {
+      "nome": "Contábil",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Contábil 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do departamento Contábil.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Contabil\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "" }
+        }
+      ]
+    },
+    {
+      "nome": "Departamento Pessoal",
+      "aplicativos": [
+        {
+          "nome": "EXEMPLO - Aplicativo do Departamento Pessoal 1",
+          "pendente": true,
+          "motivoPendencia": "Exemplo: preencher com o programa real do Departamento Pessoal.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\DP\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "Arquivo", "caminho": "" }
+        }
+      ]
+    }
+  ]
+}
