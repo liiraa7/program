@@ -229,7 +229,7 @@ InstallShield `/s /v"/qn /norestart"`, WiX Burn `/quiet /norestart`. Inclua semp
 
 #### Pasta de rede protegida por usuário e senha
 
-Se os instaladores estiverem numa pasta que pede login (ex.: `\\srv-dominio\Instaladores`), **não coloque
+Se os instaladores estiverem numa pasta que pede login (ex.: `\\SERVIDOR\Instaladores`), **não coloque
 usuário nem senha no JSON**. Ao iniciar a simulação ou a execução, o Padronizador detecta a pasta inacessível e
 abre uma janela pedindo usuário e senha. A senha fica só na memória, não vai para o log, e a conexão é desfeita
 ao final. Se o técnico clicar em **"Pular esta pasta"**, os itens dessa pasta ficam como falha "sem acesso".

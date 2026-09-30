@@ -28,7 +28,7 @@ public sealed class DialogoCredencial : Form
         painel.Controls.Add(new Label
         {
             Text = $"A pasta {raiz} pede usuário e senha.\n" +
-                   "Exemplo de usuário: SRV-DOMINIO\\usuario ou DOMINIO\\usuario.\n" +
+                   "Exemplo de usuário: SERVIDOR\\usuario ou DOMINIO\\usuario.\n" +
                    "A senha não é gravada e a conexão é desfeita ao final.",
             AutoSize = true, MaximumSize = new Size(420, 0), Margin = new Padding(3, 3, 3, 10),
         }, 0, 0);

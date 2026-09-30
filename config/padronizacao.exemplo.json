@@ -84,7 +84,7 @@
       "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Comum\\Dominio\\Instala.exe",
       "argumentos": "",
       "tempoLimiteMinutos": 90,
-      "observacao": "Instala qualquer versão uma única vez; depois o próprio Domínio se atualiza pelo servidor (pasta Atualiza do srv-dominio). Para trocar o instalador de base, substitua o Instala.exe mantendo o mesmo nome.",
+      "observacao": "Instala qualquer versão uma única vez; depois o próprio Domínio se atualiza pelo servidor (pasta de atualização do servidor do Domínio). Para trocar o instalador de base, substitua o Instala.exe mantendo o mesmo nome.",
       "deteccao": {
         "tipo": "ProgramaInstalado",
         "nomeExibicao": "Domínio",
