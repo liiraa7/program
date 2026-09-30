@@ -70,6 +70,13 @@
       "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER nome em Programas e Recursos" }
     },
     {
+      "nome": "Adobe Acrobat Reader (64 bits)",
+      "tipo": "WinGet",
+      "idWinGet": "Adobe.Acrobat.Reader.64-bit",
+      "fonte": "winget",
+      "observacao": "Confirme o ID antes do uso: winget show --id Adobe.Acrobat.Reader.64-bit --source winget"
+    },
+    {
       "nome": "Java",
       "pendente": true,
       "motivoPendencia": "PENDENTE: informar distribuição (Oracle Java exige licença comercial; OpenJDK é alternativa), versão (ex.: 8, 17, 21), arquitetura (32/64 bits) e o instalador ou ID WinGet aprovado.",
@@ -129,13 +136,6 @@
       // Certificado digital: o Fiscal usa certificado A1 (arquivo .pfx). Ele NÃO é instalado
       // por este programa, pois exige senha. Importe manualmente, por usuário.
       "aplicativos": [
-        {
-          "nome": "Adobe Acrobat Reader (64 bits)",
-          "tipo": "WinGet",
-          "idWinGet": "Adobe.Acrobat.Reader.64-bit",
-          "fonte": "winget",
-          "observacao": "Confirme o ID antes do uso: winget show --id Adobe.Acrobat.Reader.64-bit --source winget"
-        },
         {
           "nome": "Domínio Sistemas (Thomson Reuters) - estação cliente",
           "pendente": true,
