@@ -173,11 +173,20 @@
           "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
         },
         {
-          "nome": "Programa da SEFAZ (estado a definir)",
+          "nome": "Nova GIA (SEFAZ-SP)",
           "pendente": true,
-          "motivoPendencia": "PENDENTE: informar o estado, o nome do programa da SEFAZ, o instalador baixado do site oficial e os argumentos silenciosos.",
+          "motivoPendencia": "PENDENTE: baixar o instalador no portal oficial da SEFAZ-SP, colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
           "tipo": "Exe",
-          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\SEFAZ\\PREENCHER.exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\GIA\\PREENCHER.exe",
+          "argumentos": "",
+          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
+        },
+        {
+          "nome": "SEDIF-SN (DeSTDA)",
+          "pendente": true,
+          "motivoPendencia": "PENDENTE: baixar o instalador no portal oficial do SEDIF-SN, colocá-lo na pasta de rede e informar o nome do arquivo, a versão e os argumentos silenciosos testados.",
+          "tipo": "Exe",
+          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Fiscal\\SEDIF\\PREENCHER.exe",
           "argumentos": "",
           "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
         }
