@@ -77,6 +77,21 @@
       "observacao": "Confirme o ID antes do uso: winget show --id Adobe.Acrobat.Reader.64-bit --source winget"
     },
     {
+      "nome": "Domínio Sistemas (Thomson Reuters) - estação",
+      "pendente": true,
+      "motivoPendencia": "PENDENTE: baixar o Instala.exe da versão usada pelo servidor (site oficial download.dominiosistemas.com.br/instalacao/contabil/), conferir com o arquivo da pasta checksums/, colocar em Padronizador-Comum\\Dominio\\ e rodar o comando de identificação.",
+      "tipo": "Exe",
+      "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Comum\\Dominio\\Instala.exe",
+      "argumentos": "",
+      "tempoLimiteMinutos": 90,
+      "observacao": "Instala qualquer versão uma única vez; depois o próprio Domínio se atualiza pelo servidor (pasta Atualiza do srv-dominio). Para trocar o instalador de base, substitua o Instala.exe mantendo o mesmo nome.",
+      "deteccao": {
+        "tipo": "ProgramaInstalado",
+        "nomeExibicao": "Domínio",
+        "comparacao": "Contem"
+      }
+    },
+    {
       "nome": "Java",
       "pendente": true,
       "motivoPendencia": "PENDENTE: informar distribuição (Oracle Java exige licença comercial; OpenJDK é alternativa), versão (ex.: 8, 17, 21), arquitetura (32/64 bits) e o instalador ou ID WinGet aprovado.",
@@ -136,15 +151,6 @@
       // Certificado digital: o Fiscal usa certificado A1 (arquivo .pfx). Ele NÃO é instalado
       // por este programa, pois exige senha. Importe manualmente, por usuário.
       "aplicativos": [
-        {
-          "nome": "Domínio Sistemas (Thomson Reuters) - estação cliente",
-          "pendente": true,
-          "motivoPendencia": "PENDENTE: informar o caminho do instalador da estação (normalmente fica no servidor do Domínio), os argumentos de instalação silenciosa e o nome exibido em Configurações > Aplicativos.",
-          "tipo": "Exe",
-          "caminho": "\\\\SERVIDOR-EXEMPLO\\Instaladores$\\Dominio\\PREENCHER.exe",
-          "argumentos": "",
-          "deteccao": { "tipo": "ProgramaInstalado", "nomeExibicao": "PREENCHER" }
-        },
         {
           "nome": "Receitanet",
           "pendente": true,
